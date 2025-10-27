@@ -1,13 +1,4 @@
-/**
- * insta-gallery
- * Instagram-style gallery using Lit + DDD + RandomFox API
- * - Loads images from https://randomfox.ca/floof/ (one fox per call)
- * - Lazy/conditional loading via IntersectionObserver (fetches per page)
- * - Like / Dislike stored in localStorage
- * - Share (Web Share API with clipboard fallback)
- * - Dark mode (system + toggle)
- * - Lightbox / slider for full images
- */
+
 import { LitElement, html, css, nothing } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
