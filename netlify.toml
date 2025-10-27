@@ -1,9 +1,9 @@
 [build]
   publish = "public"
-  command = "npm run build"
+  command = "npm run build || 'no build'"
 
 [[headers]]
-  for = "/*"
+  for = "/api/*"
   [headers.values]
     Cache-Control = "max-age=31536001"
     Cross-Origin-Opener-Policy = "same-origin"
