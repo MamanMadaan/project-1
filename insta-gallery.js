@@ -2,9 +2,9 @@ import { LitElement, html, css, nothing } from "lit";
 
 class InstaGallery extends LitElement {
   static properties = {
-    api: { type: String },          // "./api/chefs.json" or "gen"
-    pageSize: { type: Number },     // batch size
-    infinite: { type: Boolean, reflect: true }, // enable infinite generation after JSON ends
+    api: { type: String },          
+    pageSize: { type: Number },    
+    infinite: { type: Boolean, reflect: true }, 
     _all: { state: true },
     _visible: { state: true },
     _likes: { state: true },
@@ -17,14 +17,14 @@ class InstaGallery extends LitElement {
     super();
     this.api = "./api/chefs.json";
     this.pageSize = 15;
-    this.infinite = true;              // ⬅️ turn off if you want to stop at end of JSON
+    this.infinite = true;              
     this._all = [];
     this._visible = [];
     this._likes = this._loadLikes();
     this._lightboxIndex = null;
     this._loadingMore = false;
     this._observer = null;
-    this._genCounter = 1000;           // seed for generated IDs / images
+    this._genCounter = 1000;           
   }
 
   static styles = css`
@@ -56,7 +56,6 @@ class InstaGallery extends LitElement {
   async connectedCallback() {
     super.connectedCallback();
     if (this.api === "gen") {
-      // pure infinite mode from the start
       this._all = this._generateBatch(2 * this.pageSize);
       this._visible = this._all.slice(0, this.pageSize);
     } else {
@@ -86,7 +85,6 @@ class InstaGallery extends LitElement {
       const r = await fetch(this.api, { cache: "no-store" });
       const data = await r.json();
       this._all = Array.isArray(data) ? data : (data.chefs || data.photos || []);
-      // seed a bit more so scrolling feels smooth
       this._all = [...this._all];
       this._visible = this._all.slice(0, this.pageSize);
     } catch (e) {
@@ -102,12 +100,11 @@ class InstaGallery extends LitElement {
     this._loadingMore = true;
 
     setTimeout(() => {
-      // If we still have unseen items from JSON/_all, just reveal more
+      
       if (this._visible.length < this._all.length) {
         const nextCount = Math.min(this._visible.length + this.pageSize, this._all.length);
         this._visible = this._all.slice(0, nextCount);
       } else if (this.infinite) {
-        // Append newly generated “chef” cards endlessly
         const fresh = this._generateBatch(this.pageSize);
         this._all = [...this._all, ...fresh];
         this._visible = [...this._visible, ...fresh];
@@ -116,7 +113,7 @@ class InstaGallery extends LitElement {
     }, 0);
   }
 
-  // ------- generator for infinite photos -------
+ 
   _generateBatch(n) {
     const chefNames = [
       "Gordon Ramsay","Jamie Oliver","Alain Ducasse","Thomas Keller","Heston Blumenthal",
@@ -128,7 +125,7 @@ class InstaGallery extends LitElement {
     for (let i = 0; i < n; i++) {
       const idNum = this._genCounter++;
       const name = chefNames[idNum % chefNames.length] + " #" + idNum;
-      const lock = idNum; // seeds a unique image each time
+      const lock = idNum;
       batch.push({
         id: "g-" + idNum,
         name,
@@ -146,7 +143,6 @@ class InstaGallery extends LitElement {
     return batch;
   }
 
-  // ------- reactions / storage -------
   _loadLikes() {
     try { return JSON.parse(localStorage.getItem("chefLikes")) || {}; }
     catch { return {}; }
@@ -196,7 +192,7 @@ class InstaGallery extends LitElement {
         `)}
       </div>
 
-      <!-- sentinel for lazy loading -->
+  
       <div id="sentinel" class="sentinel" aria-hidden="true"></div>
 
       ${this._lightboxIndex!=null ? html`
