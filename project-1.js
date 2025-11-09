@@ -35,7 +35,7 @@ export class Project1 extends DDDSuper(I18NMixin(LitElement)) {
     });
   }
 
-  // Lit reactive properties
+
   static get properties() {
     return {
       ...super.properties,
@@ -43,7 +43,7 @@ export class Project1 extends DDDSuper(I18NMixin(LitElement)) {
     };
   }
 
-  // Lit scoped styles
+  
   static get styles() {
     return [super.styles,
     css`
@@ -63,7 +63,7 @@ export class Project1 extends DDDSuper(I18NMixin(LitElement)) {
     `];
   }
 
-  // Lit render the HTML
+  
   render() {
     return html`
 <div class="wrapper">
@@ -72,9 +72,7 @@ export class Project1 extends DDDSuper(I18NMixin(LitElement)) {
 </div>`;
   }
 
-  /**
-   * haxProperties integration via file reference
-   */
+  
   static get haxProperties() {
     return new URL(`./lib/${this.tag}.haxProperties.json`, import.meta.url)
       .href;
